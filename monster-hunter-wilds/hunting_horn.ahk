@@ -26,6 +26,7 @@
 
 #Requires AutoHotkey v2.0
 #SingleInstance Force
+KeyHistory(200)
 
 ; Only activate when MH Wilds is the focused window
 #HotIf WinActive("ahk_exe MonsterHunterWilds.exe")
