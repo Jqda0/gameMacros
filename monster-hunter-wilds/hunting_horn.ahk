@@ -31,15 +31,23 @@
 #HotIf WinActive("ahk_exe MonsterHunterWilds.exe")
 
 ; ── Timing (ms) — increase if inputs are dropped ──────────────
-dShort   := 500   ; gap between light attack inputs
+dShort   := 500   ; gap between sequential note inputs
 dMid     := 1000  ; gap after Note 3 / heavy attacks
 dPerform := 3000  ; wait for Recital animation to finish
+dHold    := 150   ; how long to hold simultaneous button combinations
+dBeat    := 400   ; gap before second R press in Performance Beat
 
 ; ── Helper: simultaneous LMB+RMB → Note 3 / Overhead Smash ───
 Note3() {
     Send("{LButton down}{RButton down}")
-    Sleep(80)
+    Sleep(dHold)
     Send("{LButton up}{RButton up}")
+}
+
+; ── Helper: clear any residual button state before a macro ────
+ResetButtons() {
+    Send("{LButton up}{RButton up}{r up}{Space up}{w up}")
+    Sleep(100)
 }
 
 ; ─────────────────────────────────────────────────────────────
@@ -61,7 +69,7 @@ F1:: {
 F2:: {
     ToolTip("F2: Recital 1")
     Send("{r}")
-    Sleep(80)
+    Sleep(dBeat)
     ToolTip("F2: Recital 2 (Beat)")
     Send("{r}")
     ToolTip("F2: Done")
@@ -78,7 +86,7 @@ F2:: {
 F3:: {
     ToolTip("F3: Echo Bubble")
     Send("{r down}{Space down}")
-    Sleep(50)
+    Sleep(dHold)
     Send("{r up}{Space up}")
     ToolTip("F3: Done")
     Sleep(1000)
@@ -95,7 +103,7 @@ F3:: {
 F4:: {
     ToolTip("F4: Special Performance")
     Send("{r down}{LButton down}{RButton down}")
-    Sleep(60)
+    Sleep(dHold)
     Send("{r up}{LButton up}{RButton up}")
     ToolTip("F4: Done")
     Sleep(1000)
@@ -108,6 +116,7 @@ F4:: {
 ; Builds one full melody then performs it immediately.
 ; ─────────────────────────────────────────────────────────────
 F5:: {
+    ResetButtons()
     ToolTip("F5: LButton")
     Send("{LButton}")
     Sleep(dShort)
@@ -131,6 +140,7 @@ F5:: {
 ; Performing all 3 together increases buff potency and duration.
 ; ─────────────────────────────────────────────────────────────
 F6:: {
+    ResetButtons()
     Loop 3 {
         ToolTip("F6: Loop iter " A_Index " - LButton")
         Send("{LButton}")
@@ -156,9 +166,7 @@ F6:: {
 ; extending their duration significantly.
 ; ─────────────────────────────────────────────────────────────
 F7:: {
-    Send("{LButton up}{RButton up}")  ; clear any residual button state
-    Sleep(100)
-    ToolTip("F7: Starting loop")
+    ResetButtons()
     Loop 3 {
         ToolTip("F7: Loop iter " A_Index " - LButton")
         Send("{LButton}")
@@ -174,7 +182,7 @@ F7:: {
     Send("{r}")
     Sleep(dPerform)
     ToolTip("F7: Encore")
-    Note3()  ; Encore
+    Note3()
     ToolTip("F7: Done")
     Sleep(1000)
     ToolTip()
@@ -187,14 +195,15 @@ F7:: {
 ; Repeated inputs chain into the Spinning Overhead Smash.
 ; ─────────────────────────────────────────────────────────────
 F8:: {
+    ResetButtons()
     Loop 3 {
         ToolTip("F8: Loop iter " A_Index " - W+Note3")
         Send("{w down}")
-        Sleep(20)
+        Sleep(dHold)
         Note3()
         Sleep(dMid)
         Send("{w up}")
-        Sleep(60)
+        Sleep(dHold)
     }
     ToolTip("F8: Done")
     Sleep(1000)
@@ -209,14 +218,15 @@ F8:: {
 ; Increase dPerform if you need time to reposition into the bubble.
 ; ─────────────────────────────────────────────────────────────
 F9:: {
+    ResetButtons()
     ToolTip("F9: Echo Bubble")
     Send("{r down}{Space down}")
-    Sleep(50)
+    Sleep(dHold)
     Send("{r up}{Space up}")
     Sleep(dPerform)
     ToolTip("F9: Special Performance")
     Send("{r down}{LButton down}{RButton down}")
-    Sleep(60)
+    Sleep(dHold)
     Send("{r up}{LButton up}{RButton up}")
     ToolTip("F9: Done")
     Sleep(1000)
@@ -229,6 +239,7 @@ F9:: {
 ; Maximum buff + damage output. Takes several seconds to execute.
 ; ─────────────────────────────────────────────────────────────
 F10:: {
+    ResetButtons()
     Loop 3 {
         ToolTip("F10: Loop iter " A_Index " - LButton")
         Send("{LButton}")
@@ -248,7 +259,7 @@ F10:: {
     Sleep(dMid)
     ToolTip("F10: Special Performance")
     Send("{r down}{LButton down}{RButton down}")
-    Sleep(60)
+    Sleep(dHold)
     Send("{r up}{LButton up}{RButton up}")
     ToolTip("F10: Done")
     Sleep(1000)
@@ -263,6 +274,7 @@ F10:: {
 ; then manually hitting R (or F1) when in range.
 ; ─────────────────────────────────────────────────────────────
 F11:: {
+    ResetButtons()
     ToolTip("F11: LButton")
     Send("{LButton}")
     Sleep(dShort)
@@ -283,6 +295,7 @@ F11:: {
 ; bonus hit, then Encore extends the resulting buff.
 ; ─────────────────────────────────────────────────────────────
 F12:: {
+    ResetButtons()
     ToolTip("F12: LButton")
     Send("{LButton}")
     Sleep(dShort)
@@ -294,7 +307,7 @@ F12:: {
     Sleep(dMid)
     ToolTip("F12: Recital")
     Send("{r}")
-    Sleep(80)
+    Sleep(dBeat)
     ToolTip("F12: Performance Beat")
     Send("{r}")
     Sleep(dPerform)
