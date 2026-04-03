@@ -4,31 +4,27 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-AutoHotkey v2 macro script for Monster Hunter Wilds — automates Hunting Horn combos on PC (keyboard + mouse, default bindings).
+A collection of AutoHotkey v2 macro scripts for PC games. Each game has its own subfolder containing `.ahk` scripts and a README.
 
-## Running the script
+## Structure
 
-This is a Windows-only `.ahk` file. To run it, double-click `mhCombos.ahk` on a Windows machine with AutoHotkey v2 installed. There is no build step.
+```
+<game-name>/
+    <weapon-or-mode>.ahk   # macro script
+    README.md              # setup, bindings, and combo reference for this game
+README.md                  # top-level index linking to each game folder
+```
 
-To stop the script: right-click the tray icon → Exit.
+When adding a new game, create a new subfolder named after the game (kebab-case) with the script and a README following the same pattern as `monster-hunter-wilds/`.
 
-## Architecture
+## Running scripts
 
-Single file: `hunting_horn.ahk`
+Windows-only `.ahk` files — double-click to run with AutoHotkey v2. No build step. Right-click tray icon → Exit to stop.
 
-- `#HotIf WinActive("ahk_exe MonsterHunterWilds.exe")` — all hotkeys are scoped to the game window only
-- `Note3()` — helper function for the simultaneous LMB+RMB press (Attack 3 / Note 3), which is impossible to do reliably by hand
-- F1–F12 hotkeys each encode a specific combo sequence using `Send`, `Sleep`, and `Click` calls
-- Three timing globals (`dShort`, `dMid`, `dPerform`) control the ms delays between inputs — the primary tuning knobs if combos drop inputs
+## AHK v2 script conventions
 
-## Default bindings assumed
-
-| Input | Action |
-|-------|--------|
-| LMB | Attack 1 / Note 1 (Left Swing) |
-| RMB | Attack 2 / Note 2 (Right Swing) |
-| LMB+RMB | Attack 3 / Note 3 (Overhead Smash) |
-| R | Perform / Recital |
-| R + Space | Echo Bubble |
-| R + LMB + RMB | Special Performance |
-| W | Move forward (used in smash chains) |
+- `#HotIf WinActive("ahk_exe <Game>.exe")` scopes all hotkeys to the game window
+- Timing globals (`dShort`, `dMid`, `dPerform`) at the top of each file are the primary tuning knobs
+- Helper functions handle inputs that require simultaneous key/button presses (e.g. `Note3()` for LMB+RMB)
+- Use `Send("{Key down/up}")` for held inputs, `Send("{Key}")` for taps
+- Mouse buttons use `Send("{LButton}")` / `Send("{RButton}")` syntax
