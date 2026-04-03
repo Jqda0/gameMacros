@@ -32,8 +32,8 @@
 
 ; ── Timing (ms) — increase if inputs are dropped ──────────────
 dShort   := 250   ; gap between light attack inputs
-dMid     := 450   ; gap after Note 3 / heavy attacks
-dPerform := 1400  ; wait for Recital animation to finish
+dMid     := 650   ; gap after Note 3 / heavy attacks
+dPerform := 2000  ; wait for Recital animation to finish
 
 ; ── Helper: simultaneous LMB+RMB → Note 3 / Overhead Smash ───
 Note3() {
