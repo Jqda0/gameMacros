@@ -46,7 +46,12 @@ Note3() {
 ; F1 — Recital
 ; Performs all queued melodies and activates their buffs.
 ; ─────────────────────────────────────────────────────────────
-F1:: Send("{r}")
+F1:: {
+    ToolTip("F1: Recital")
+    Send("{r}")
+    Sleep(1000)
+    ToolTip()
+}
 
 ; ─────────────────────────────────────────────────────────────
 ; F2 — Performance Beat  (Recital → Recital)
@@ -54,9 +59,14 @@ F1:: Send("{r}")
 ; and slightly faster buff activation.
 ; ─────────────────────────────────────────────────────────────
 F2:: {
+    ToolTip("F2: Recital 1")
     Send("{r}")
     Sleep(80)
+    ToolTip("F2: Recital 2 (Beat)")
     Send("{r}")
+    ToolTip("F2: Done")
+    Sleep(1000)
+    ToolTip()
 }
 
 ; ─────────────────────────────────────────────────────────────
@@ -66,9 +76,13 @@ F2:: {
 ; bonus damage. Lasts ~60 seconds.
 ; ─────────────────────────────────────────────────────────────
 F3:: {
+    ToolTip("F3: Echo Bubble")
     Send("{r down}{Space down}")
     Sleep(50)
     Send("{r up}{Space up}")
+    ToolTip("F3: Done")
+    Sleep(1000)
+    ToolTip()
 }
 
 ; ─────────────────────────────────────────────────────────────
@@ -79,9 +93,13 @@ F3:: {
 ;   Melody of Life   → AoE heal for you and nearby allies
 ; ─────────────────────────────────────────────────────────────
 F4:: {
+    ToolTip("F4: Special Performance")
     Send("{r down}{LButton down}{RButton down}")
     Sleep(60)
     Send("{r up}{LButton up}{RButton up}")
+    ToolTip("F4: Done")
+    Sleep(1000)
+    ToolTip()
 }
 
 ; ─────────────────────────────────────────────────────────────
@@ -90,13 +108,20 @@ F4:: {
 ; Builds one full melody then performs it immediately.
 ; ─────────────────────────────────────────────────────────────
 F5:: {
+    ToolTip("F5: LButton")
     Send("{LButton}")
     Sleep(dShort)
+    ToolTip("F5: RButton")
     Send("{RButton}")
     Sleep(dShort)
+    ToolTip("F5: Note3")
     Note3()
     Sleep(dMid)
+    ToolTip("F5: Recital")
     Send("{r}")
+    ToolTip("F5: Done")
+    Sleep(1000)
+    ToolTip()
 }
 
 ; ─────────────────────────────────────────────────────────────
@@ -107,14 +132,21 @@ F5:: {
 ; ─────────────────────────────────────────────────────────────
 F6:: {
     Loop 3 {
+        ToolTip("F6: Loop iter " A_Index " - LButton")
         Send("{LButton}")
         Sleep(dShort)
+        ToolTip("F6: Loop iter " A_Index " - RButton")
         Send("{RButton}")
         Sleep(dShort)
+        ToolTip("F6: Loop iter " A_Index " - Note3")
         Note3()
         Sleep(dMid)
     }
+    ToolTip("F6: Recital")
     Send("{r}")
+    ToolTip("F6: Done")
+    Sleep(1000)
+    ToolTip()
 }
 
 ; ─────────────────────────────────────────────────────────────
@@ -124,17 +156,26 @@ F6:: {
 ; extending their duration significantly.
 ; ─────────────────────────────────────────────────────────────
 F7:: {
+    ToolTip("F7: Starting loop")
     Loop 3 {
+        ToolTip("F7: Loop iter " A_Index " - LButton")
         Send("{LButton}")
         Sleep(dShort)
+        ToolTip("F7: Loop iter " A_Index " - RButton")
         Send("{RButton}")
         Sleep(dShort)
+        ToolTip("F7: Loop iter " A_Index " - Note3")
         Note3()
         Sleep(dMid)
     }
+    ToolTip("F7: Recital")
     Send("{r}")
     Sleep(dPerform)
+    ToolTip("F7: Encore")
     Note3()  ; Encore
+    ToolTip("F7: Done")
+    Sleep(1000)
+    ToolTip()
 }
 
 ; ─────────────────────────────────────────────────────────────
@@ -145,6 +186,7 @@ F7:: {
 ; ─────────────────────────────────────────────────────────────
 F8:: {
     Loop 3 {
+        ToolTip("F8: Loop iter " A_Index " - W+Note3")
         Send("{w down}")
         Sleep(20)
         Note3()
@@ -152,6 +194,9 @@ F8:: {
         Send("{w up}")
         Sleep(60)
     }
+    ToolTip("F8: Done")
+    Sleep(1000)
+    ToolTip()
 }
 
 ; ─────────────────────────────────────────────────────────────
@@ -162,13 +207,18 @@ F8:: {
 ; Increase dPerform if you need time to reposition into the bubble.
 ; ─────────────────────────────────────────────────────────────
 F9:: {
+    ToolTip("F9: Echo Bubble")
     Send("{r down}{Space down}")
     Sleep(50)
     Send("{r up}{Space up}")
     Sleep(dPerform)
+    ToolTip("F9: Special Performance")
     Send("{r down}{LButton down}{RButton down}")
     Sleep(60)
     Send("{r up}{LButton up}{RButton up}")
+    ToolTip("F9: Done")
+    Sleep(1000)
+    ToolTip()
 }
 
 ; ─────────────────────────────────────────────────────────────
@@ -178,20 +228,29 @@ F9:: {
 ; ─────────────────────────────────────────────────────────────
 F10:: {
     Loop 3 {
+        ToolTip("F10: Loop iter " A_Index " - LButton")
         Send("{LButton}")
         Sleep(dShort)
+        ToolTip("F10: Loop iter " A_Index " - RButton")
         Send("{RButton}")
         Sleep(dShort)
+        ToolTip("F10: Loop iter " A_Index " - Note3")
         Note3()
         Sleep(dMid)
     }
-    Send("{r}")        ; Recital
+    ToolTip("F10: Recital")
+    Send("{r}")
     Sleep(dPerform)
-    Note3()            ; Encore (extends all buff durations)
+    ToolTip("F10: Encore")
+    Note3()
     Sleep(dMid)
-    Send("{r down}{LButton down}{RButton down}")  ; Special Performance
+    ToolTip("F10: Special Performance")
+    Send("{r down}{LButton down}{RButton down}")
     Sleep(60)
     Send("{r up}{LButton up}{RButton up}")
+    ToolTip("F10: Done")
+    Sleep(1000)
+    ToolTip()
 }
 
 ; ─────────────────────────────────────────────────────────────
@@ -202,11 +261,17 @@ F10:: {
 ; then manually hitting R (or F1) when in range.
 ; ─────────────────────────────────────────────────────────────
 F11:: {
+    ToolTip("F11: LButton")
     Send("{LButton}")
     Sleep(dShort)
+    ToolTip("F11: RButton")
     Send("{RButton}")
     Sleep(dShort)
+    ToolTip("F11: Note3")
     Note3()
+    ToolTip("F11: Done")
+    Sleep(1000)
+    ToolTip()
 }
 
 ; ─────────────────────────────────────────────────────────────
@@ -216,17 +281,26 @@ F11:: {
 ; bonus hit, then Encore extends the resulting buff.
 ; ─────────────────────────────────────────────────────────────
 F12:: {
+    ToolTip("F12: LButton")
     Send("{LButton}")
     Sleep(dShort)
+    ToolTip("F12: RButton")
     Send("{RButton}")
     Sleep(dShort)
+    ToolTip("F12: Note3")
     Note3()
     Sleep(dMid)
-    Send("{r}")        ; Recital
+    ToolTip("F12: Recital")
+    Send("{r}")
     Sleep(80)
-    Send("{r}")        ; Performance Beat (bonus hit mid-animation)
+    ToolTip("F12: Performance Beat")
+    Send("{r}")
     Sleep(dPerform)
-    Note3()            ; Encore
+    ToolTip("F12: Encore")
+    Note3()
+    ToolTip("F12: Done")
+    Sleep(1000)
+    ToolTip()
 }
 
 #HotIf
