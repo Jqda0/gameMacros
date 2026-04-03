@@ -31,7 +31,7 @@
 #HotIf WinActive("ahk_exe MonsterHunterWilds.exe")
 
 ; ── Timing (ms) — increase if inputs are dropped ──────────────
-dShort   := 250   ; gap between light attack inputs
+dShort   := 500   ; gap between light attack inputs
 dMid     := 1000  ; gap after Note 3 / heavy attacks
 dPerform := 3000  ; wait for Recital animation to finish
 
@@ -156,6 +156,8 @@ F6:: {
 ; extending their duration significantly.
 ; ─────────────────────────────────────────────────────────────
 F7:: {
+    Send("{LButton up}{RButton up}")  ; clear any residual button state
+    Sleep(100)
     ToolTip("F7: Starting loop")
     Loop 3 {
         ToolTip("F7: Loop iter " A_Index " - LButton")
