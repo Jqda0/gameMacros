@@ -31,14 +31,14 @@
 #HotIf WinActive("ahk_exe MonsterHunterWilds.exe")
 
 ; ── Timing (ms) — increase if inputs are dropped ──────────────
-dShort   := 100   ; gap between light attack inputs
-dMid     := 220   ; gap after Note 3 / heavy attacks
-dPerform := 520   ; wait for Recital animation to finish
+dShort   := 150   ; gap between light attack inputs
+dMid     := 300   ; gap after Note 3 / heavy attacks
+dPerform := 650   ; wait for Recital animation to finish
 
 ; ── Helper: simultaneous LMB+RMB → Note 3 / Overhead Smash ───
 Note3() {
     Send("{LButton down}{RButton down}")
-    Sleep(30)
+    Sleep(50)
     Send("{LButton up}{RButton up}")
 }
 
